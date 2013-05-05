@@ -1,0 +1,419 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[12pt]{article}
+\usepackage{amssymb}
+\usepackage{amsmath,amssymb,CJK}
+\usepackage{graphicx}
+\usepackage{subfigure}
+\usepackage{listings}
+\usepackage{enumerate}
+
+
+\openup 7pt\pagestyle{plain} \topmargin -40pt \textwidth
+14.5cm\textheight 21.5cm
+\parskip .09 truein
+\baselineskip 4pt\lineskip 4pt \setcounter{page}{1}
+\def\a{\alpha}\def\b{\beta}\def\d{\delta}\def\D{\Delta}\def\fs{\footnotesize}
+\def\g{\gamma}
+\def\G{\Gamma}\def\l{\lambda}\def\L{\Lambda}\def\o{\omiga}\def\p{\psi}
+\def\se{\subseteq}\def\seq{\subseteq}\def\Si{\Sigma}\def\si{\sigma}\def\vp{\varphi}\def\es{\varepsilon}
+\def\sc{\scriptstyle}\def\ssc{\scriptscriptstyle}\def\dis{\displaystyle}
+\def\cl{\centerline}\def\ll{\leftline}\def\rl{\rightline}\def\nl{\newline}
+\def\ol{\overline}\def\ul{\underline}\def\wt{\widetilde}\def\wh{\widehat}
+\def\rar{\rightarrow}\def\Rar{\Rightarrow}\def\lar{\leftarrow}
+\def\Lar{\Leftarrow}\def\Rla{\rightleftarrow}\def\bs{\backslash}
+\def\ra{\rangle}\def\la{\langle}\def\hs{\hspace*}\def\rb{\raisebox}
+\def\ni{\noindent}\def\hi{\hangindent}\def\ha{\hangafter}
+\def\vs{\vspace*}
+\def\hom#1{\mbox{\rm Hom($#1,#1$)}}
+\def\thebeg{\vskip8pt\par\ni}
+\def\theend{\vskip5pt\par}
+\def\chabeg{\pagebreak\par}
+\def\chaend{\vskip20pt\par}
+\def\secbeg{\vskip15pt\par}
+\def\secend{\vskip10pt\par}
+\def\exebeg{\vskip10pt}
+\def\exeend{\vskip6pt}
+\def\undot#1{\mbox{$\mbox{#1}\hs{-1.5ex}_{_{\dis\centerdot}}\,\,$}}
+\def\qed{\hfill\mbox{$\Box$}}
+\def\C{\mathbb{C}}
+\def\Q{\mathbb{Q}}
+\def\ii{\mbox{\,{\bf i}\,}}
+\def\jj{\mbox{\,{\bf j}\,}}
+\def\AA{{\cal A}}
+\def\BB{{\cal B}}
+\def\DD{{\cal D}}
+\def\EE{{\mbox{\bf 1}}}
+\def\OO{{\mbox{\bf 0}}}
+\def\kk{{\mbox{\bf k}}}
+\def\R{\mathbb{R}}
+\def\F{\mathbb{F}{\ssc\,}}
+%\def\similar{\rb{-4pt}{\mbox{\,\~\,}}}
+\def\similar{\backsim}
+\def\Llra{\Longleftrightarrow}
+\def\Lra{\Longrightarrow}
+\def\Lla{\Longleftarrow}
+\def\mat#1#2{\mbox{$\left(\begin{array}{#1}#2\end{array}\right)$}}
+\def\det#1#2{\mbox{$\left|\begin{array}{#1}#2\end{array}\right|$}}
+\def\eset{\emptyset}
+\parindent=5ex
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{1ex plus 0.5ex minus 0.2ex}
+\newtheorem{Example}{\text{例}}
+
+
+\begin{document}
+\begin{CJK*}{UTF8}{gbsn}
+\title{Homework2}
+\author{李青林(5110309074)}
+\date{}
+\maketitle
+
+\section{Q1}
+\textbf{Q1. Scoreboarding vs. Tomasulo’s Algorithm}\\
+
+ADD.S F1, F2, F3\\
+MUL.S F1, F2, F3\\
+
+Scoreboarding would stop because of the WAW hazard.\\
+But Tomasulo would continue would continue because the multiplier is free and it can avoid WAW hazard by register renaming.
+
+\section{Q2}
+\textbf{Q2. Branch Prediction}
+
+\begin{enumerate}[a)]
+
+\item 
+m=2, n=2
+
+\item
+not taken\\
+
+B1: taken\\
+B2: not taken\\
+
+The predictor for B3 should be $\mathbf{01}$\\
+Since the state of predictor $\mathbf{01}$ is $\mathtt{00}$, it predicte not taken.
+
+\item
+$\mathbf{01}$
+
+\item
+Each entry contains $8$ bits.
+
+$$10000/8=1250$$
+
+The number of entry is $1024 = 2^{10}$
+	
+\end{enumerate}
+
+\section{Q3}
+\textbf{Q3. Code Scheduling}
+
+\begin{enumerate}[a)]
+\item
+L.S F0, 0(R1)\\
+L.S F1, 0(R2)\\
+Stall\\
+Stall\\
+ADD.S F0, F0, F1\\
+L.S F2, 0(R3)\\
+L.S F3, 0(R4)\\
+Stall\\
+Stall\\
+MUL.S F2, F2, F3\\
+Stall\\
+Stall\\
+Stall\\
+Stall\\
+ADD.S F0, F0, F2\\
+Stall\\
+Stall\\
+S.S F0, 0(R5)\\
+
+18 cycles in all\\
+
+\item
+L.S F2, 0(R3)\\
+L.S F3, 0(R4)\\
+L.S F0, 0(R1)\\
+L.S F1, 0(R2)\\
+MUL.S F2, F2, F3\\
+ADD.S F0, F0, F1\\
+ADD.S F0, F0, F2\\
+S.S F0, 0(R5)\\
+
+L.S F2, 0(R3)\\
+L.S F3, 0(R4)\\
+L.S F0, 0(R1)\\
+L.S F1, 0(R2)\\
+MUL.S F2, F2, F3\\
+Stall\\
+ADD.S F0, F0, F1\\
+Stall\\
+Stall\\
+ADD.S F0, F0, F2\\
+Stall\\
+Stall\\
+S.S F0, 0(R5)\\
+
+13 cycles in all\\
+
+\end{enumerate}
+
+\section{Q4}
+\textbf{Q4. VLIW}
+
+\begin{enumerate}[a)]
+\item
+$ $
+\begin{table}[!hbp]
+\resizebox{\textwidth}{!}{
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline 
+ALU1 & ALU2 & MU1 & MU2 & FADD & FMUL \\ 
+\hline 
+add r1, r1, -4 & add r2, r2, -4 & ld f1, 0(r1) & ld f1, 0(r1) &  &  \\ 
+\hline 
+add r3, r3, -4 & add r3, r4, -1 & ld f3, 0(r1) &  &  &  \\ 
+\hline 
+ &  &  &  &  &  \\ 
+\hline 
+ &  &  &  &  & fmul f4, f2, f1 \\ 
+\hline 
+ &  &  &  &  &  \\ 
+\hline 
+ &  &  &  &  &  \\ 
+\hline 
+ &  &  &  &  &  \\ 
+\hline 
+ &  &  & st f4, 4(r1) & fadd f5, f4, f3 &  \\ 
+\hline 
+ &  &  &  &  &  \\ 
+\hline 
+ &  &  &  &  &  \\ 
+\hline 
+ &  &  &  &  &  \\ 
+\hline 
+ & benz r4, loop & st f5, 0(r3) &  &  &  \\ 
+\hline 
+ &  &  &  &  &  \\ 
+\hline 
+ &  &  &  &  &  \\ 
+\hline 
+\end{tabular} 
+}
+\end{table}
+\newpage
+\item
+$ $
+\begin{table}[!hbp]
+\resizebox{\textwidth}{!}{
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline 
+ALU1 & ALU2 & MU1 & MU2 & FADD & FMUL \\ 
+\hline 
+add r4, r4, -2 &  & ld f1, 0(r1) & ld f2, 0(r2) &  &  \\ 
+\hline 
+add r1, r1, -8 & add r2, r2, -8 & ld f9, -4(r1) & ld f10, -4(r2) &  &  \\ 
+\hline 
+add r3, r3, -8 &  & ld f3, 0(r3) & ld f11, -4(r3) &  &  \\ 
+\hline 
+ &  &  &  &  &  \\ 
+\hline 
+ &  &  &  &  & fmul f4, f2, f1 \\ 
+\hline 
+ &  &  &  &  & fmul f12, f11, f10 \\ 
+\hline 
+ &  &  &  &  &  \\ 
+\hline 
+ &  &  &  &  &  \\ 
+\hline 
+ &  &  & st f4, 8(r1) & fadd f5, f4, f3 &  \\ 
+\hline 
+ &  &  & st f12, 4(r1) & fadd f13, f12, f11 &  \\ 
+\hline 
+ &  &  &  &  &  \\ 
+\hline 
+ &  &  &  &  &  \\ 
+\hline 
+ &  &  & st f5, 8(r3) &  &  \\ 
+\hline 
+ & benz r4, loop &  & st f13, 4(r3) &  &  \\ 
+\hline 
+ &  &  &  &  &  \\ 
+\hline 
+\end{tabular} 
+}
+\end{table}
+
+It do give us better performance.
+
+\end{enumerate}
+
+\section{Q5}
+\textbf{Q5. Simple Cache}
+
+\begin{enumerate}[a)]
+
+\item
+$ $\\
+\begin{tabular}{|c|c|c|c|c|c|c|}
+\hline 
+reference	& 1 		& 4 		& 8 		&5& 20 	& 17 	 \\ 
+\hline 
+hit/miss		& miss 	& miss 	& miss 	&miss& miss 	& miss 	 \\ 
+\hline 
+reference &19& 56 & 9 & 11 & 4 & 43  \\ 
+\hline 
+hit/miss &miss& miss & miss & miss & miss & miss  \\ 
+\hline
+reference &5& 6 & 9 & 17 &&\\
+\hline
+hit/miss &hit& miss & hit &hit&&\\
+\hline 
+\end{tabular} 
+
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline 
+block NO. &0 & 1 & 2 & 3 & 4  \\ 
+\hline 
+content && 17 &  & 19 & 4  \\ 
+\hline 
+block NO. &5& 6 & 7 & 8 & 9  \\ 
+\hline 
+content &5& 6 &  & 56 & 9   \\ 
+\hline 
+block NO. &10& 11 & 12 & 13 & 14  \\ 
+\hline 
+content & & 43 &  &  &    \\ 
+\hline
+block NO. & 15 &&&&\\
+\hline
+content & &&&&\\
+\hline 
+\end{tabular} 
+
+\newpage
+\item
+$ $\\
+
+\begin{tabular}{|c|c|c|c|c|c|c|}
+\hline 
+reference	& 1 		& 4 		& 8 		&5& 20 	& 17 	 \\ 
+\hline 
+hit/miss		& miss 	& miss 	& miss 	&hit& miss 	& miss 	 \\ 
+\hline 
+reference &19& 56 & 9 & 11 & 4 & 43  \\ 
+\hline 
+hit/miss &hit& miss & miss & hit & miss & miss  \\ 
+\hline
+reference &5& 6 & 9 & 17 &&\\
+\hline
+hit/miss &hit& hit & miss &hit&&\\
+\hline 
+\end{tabular} 
+
+\begin{tabular}{|c|c|c|c|c|}
+\hline 
+block1 & 1 & 2 & 3 & 4 \\ 
+\hline 
+content & 16 & 17 & 18 & 19 \\ 
+\hline 
+block2 & 1 & 2 & 3 & 4 \\ 
+\hline 
+content & 4 & 5 & 6 & 7 \\ 
+\hline 
+block3 & 1 & 2 & 3 & 4 \\ 
+\hline 
+content & 8 & 9 & 10 & 11 \\ 
+\hline 
+block4 & 1 & 2 & 3 & 4 \\ 
+\hline 
+content &  &  &  &  \\ 
+\hline 
+\end{tabular} 
+
+\item
+$ $\\
+\begin{tabular}{|c|c|c|c|c|c|c|}
+\hline 
+reference	& 1 		& 4 		& 8 		&5& 20 	& 17 	 \\ 
+\hline 
+hit/miss		& miss 	& miss 	& miss 	&miss& miss 	& miss 	 \\ 
+\hline 
+reference &19& 56 & 9 & 11 & 4 & 43  \\ 
+\hline 
+hit/miss &miss& miss & miss & miss & hit & miss  \\ 
+\hline
+reference &5& 6 & 9 & 17 &&\\
+\hline
+hit/miss &hit& miss & hit &hit&&\\
+\hline 
+\end{tabular} 
+
+\begin{tabular}{|c|c|c|}
+\hline
+NO. & way0 & way1\\
+\hline
+0 & 56 & 8  \\
+\hline
+1 & 17 & 9  \\
+\hline
+2 &  &   \\
+\hline
+3 & 43 & 11  \\
+\hline
+4 & 4 & 20  \\
+\hline
+5 & 5 &   \\
+\hline
+6 & 6 &   \\
+\hline
+7 &  &   \\
+\hline
+\end{tabular}
+\newpage
+\item
+$ $\\
+
+\begin{tabular}{|c|c|c|c|c|c|c|}
+\hline 
+reference	& 1 		& 4 		& 8 		&5& 20 	& 17 	 \\ 
+\hline 
+hit/miss		& miss 	& miss 	& miss 	&miss& miss 	& miss 	 \\ 
+\hline 
+reference &19& 56 & 9 & 11 & 4 & 43  \\ 
+\hline 
+hit/miss &miss& miss & miss & miss & hit & miss  \\ 
+\hline
+reference &5& 6 & 9 & 17 &&\\
+\hline
+hit/miss &hit& miss & hit &hit&&\\
+\hline 
+\end{tabular} 
+
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+NO. & 0 & 1 & 2 & 3 \\ 
+\hline
+content & 17 & 9 & 6 & 5 \\
+\hline
+NO. & 4 & 5 & 6 & 7\\
+\hline
+content & 43 & 4 & 11 & 56\\
+\hline
+NO. & 8 & 9 & 10 & 11\\
+\hline
+content & 19 & 20 & 8 & 1\\
+\hline
+NO. & 12&13&14&15\\
+\hline
+content &&&&\\
+\hline
+\end{tabular}
+
+\end{enumerate}
+
+\end{CJK*}
+\end{document}
+
