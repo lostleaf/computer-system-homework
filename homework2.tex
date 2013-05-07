@@ -88,14 +88,15 @@ m=2, n=2
 \item
 not taken\\
 
-B1: taken\\
-B2: not taken\\
+B1: not taken\\
+B2: taken\\
 
 The predictor for B3 should be $\mathbf{01}$\\
 Since the state of predictor $\mathbf{01}$ is $\mathtt{00}$, it predicte not taken.
 
 \item
-$\mathbf{01}$
+$\mathbf{00}$
+Because B3 is not taken
 
 \item
 Each entry contains $8$ bits.
@@ -214,15 +215,15 @@ ALU1 & ALU2 & MU1 & MU2 & FADD & FMUL \\
 \hline 
 add r4, r4, -2 &  & ld f1, 0(r1) & ld f2, 0(r2) &  &  \\ 
 \hline 
-add r1, r1, -8 & add r2, r2, -8 & ld f9, -4(r1) & ld f10, -4(r2) &  &  \\ 
+add r1, r1, -8 & add r2, r2, -8 & ld f6, -4(r1) & ld f7, -4(r2) &  &  \\ 
 \hline 
-add r3, r3, -8 &  & ld f3, 0(r3) & ld f11, -4(r3) &  &  \\ 
+add r3, r3, -8 &  & ld f3, 0(r3) & ld f8, -4(r3) &  &  \\ 
 \hline 
  &  &  &  &  &  \\ 
 \hline 
  &  &  &  &  & fmul f4, f2, f1 \\ 
 \hline 
- &  &  &  &  & fmul f12, f11, f10 \\ 
+ &  &  &  &  & fmul f9, f8, f7 \\ 
 \hline 
  &  &  &  &  &  \\ 
 \hline 
@@ -230,7 +231,7 @@ add r3, r3, -8 &  & ld f3, 0(r3) & ld f11, -4(r3) &  &  \\
 \hline 
  &  &  & st f4, 8(r1) & fadd f5, f4, f3 &  \\ 
 \hline 
- &  &  & st f12, 4(r1) & fadd f13, f12, f11 &  \\ 
+ &  &  & st f9, 4(r1) & fadd f10, f9, f8 &  \\ 
 \hline 
  &  &  &  &  &  \\ 
 \hline 
@@ -238,7 +239,7 @@ add r3, r3, -8 &  & ld f3, 0(r3) & ld f11, -4(r3) &  &  \\
 \hline 
  &  &  & st f5, 8(r3) &  &  \\ 
 \hline 
- & benz r4, loop &  & st f13, 4(r3) &  &  \\ 
+ & benz r4, loop &  & st f10, 4(r3) &  &  \\ 
 \hline 
  &  &  &  &  &  \\ 
 \hline 
@@ -414,6 +415,65 @@ content &&&&\\
 
 \end{enumerate}
 
+\section{Q6}
+\textbf{Q6. SimpleScalar Assignment}
+
+anagram:\\
+\begin{tabular}{|c|c|}
+\hline 
+  & hit rate \\ 
+\hline 
+1bit-GAp & 0.9671 \\ 
+\hline 
+1bit-PAg & 0.9684 \\ 
+\hline 
+1bit-bimod & 0.9335 \\ 
+\hline 
+2bit-GAp & 0.9766 \\ 
+\hline 
+2bit-PAg & 0.9750 \\ 
+\hline 
+2bit-bimod & 0.9614 \\ 
+\hline 
+\end{tabular} 
+
+cc1:\\
+\begin{tabular}{|c|c|}
+\hline 
+ & hit rate \\ 
+\hline 
+1bit-GAp & 0.8557 \\ 
+\hline 
+1bit-PAg & 0.8210 \\ 
+\hline 
+1bit-bimod & 0.8641 \\ 
+\hline 
+2bit-GAp & 0.8454 \\ 
+\hline 
+2bit-PAg & 0.8191 \\ 
+\hline 
+2bit-bimod & 0.8823 \\ 
+\hline 
+\end{tabular} 
+
+go:\\
+\begin{tabular}{|c|c|}
+\hline 
+ & hit rate \\ 
+\hline 
+1bit-GAp & 0.7419 \\ 
+\hline 
+1bit-PAg & 0.7075 \\ 
+\hline 
+1bit-bimod & 0.7361 \\ 
+\hline 
+2bit-GAp & 0.7305 \\ 
+\hline 
+2bit-PAg & 0.7156 \\ 
+\hline 
+2bit-bimod & 0.7023 \\ 
+\hline 
+\end{tabular} 
 \end{CJK*}
 \end{document}
 
