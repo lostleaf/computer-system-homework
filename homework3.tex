@@ -1,0 +1,182 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[12pt]{article}
+\usepackage{amssymb}
+\usepackage{amsmath,amssymb,CJK}
+\usepackage{graphicx}
+\usepackage{subfigure}
+\usepackage{listings}
+\usepackage{enumerate}
+
+\openup 7pt\pagestyle{plain} \topmargin -40pt \textwidth
+14.5cm\textheight 21.5cm
+\parskip .09 truein
+\baselineskip 4pt\lineskip 4pt \setcounter{page}{1}
+\def\a{\alpha}\def\b{\beta}\def\d{\delta}\def\D{\Delta}\def\fs{\footnotesize}
+\def\g{\gamma}
+\def\G{\Gamma}\def\l{\lambda}\def\L{\Lambda}\def\o{\omiga}\def\p{\psi}
+\def\se{\subseteq}\def\seq{\subseteq}\def\Si{\Sigma}\def\si{\sigma}\def\vp{\varphi}\def\es{\varepsilon}
+\def\sc{\scriptstyle}\def\ssc{\scriptscriptstyle}\def\dis{\displaystyle}
+\def\cl{\centerline}\def\ll{\leftline}\def\rl{\rightline}\def\nl{\newline}
+\def\ol{\overline}\def\ul{\underline}\def\wt{\widetilde}\def\wh{\widehat}
+\def\rar{\rightarrow}\def\Rar{\Rightarrow}\def\lar{\leftarrow}
+\def\Lar{\Leftarrow}\def\Rla{\rightleftarrow}\def\bs{\backslash}
+\def\ra{\rangle}\def\la{\langle}\def\hs{\hspace*}\def\rb{\raisebox}
+\def\ni{\noindent}\def\hi{\hangindent}\def\ha{\hangafter}
+\def\vs{\vspace*}
+\def\hom#1{\mbox{\rm Hom($#1,#1$)}}
+\def\thebeg{\vskip8pt\par\ni}
+\def\theend{\vskip5pt\par}
+\def\chabeg{\pagebreak\par}
+\def\chaend{\vskip20pt\par}
+\def\secbeg{\vskip15pt\par}
+\def\secend{\vskip10pt\par}
+\def\exebeg{\vskip10pt}
+\def\exeend{\vskip6pt}
+\def\undot#1{\mbox{$\mbox{#1}\hs{-1.5ex}_{_{\dis\centerdot}}\,\,$}}
+\def\qed{\hfill\mbox{$\Box$}}
+\def\C{\mathbb{C}}
+\def\Q{\mathbb{Q}}
+\def\ii{\mbox{\,{\bf i}\,}}
+\def\jj{\mbox{\,{\bf j}\,}}
+\def\AA{{\cal A}}
+\def\BB{{\cal B}}
+\def\DD{{\cal D}}
+\def\EE{{\mbox{\bf 1}}}
+\def\OO{{\mbox{\bf 0}}}
+\def\kk{{\mbox{\bf k}}}
+\def\R{\mathbb{R}}
+\def\F{\mathbb{F}{\ssc\,}}
+%\def\similar{\rb{-4pt}{\mbox{\,\~\,}}}
+\def\similar{\backsim}
+\def\Llra{\Longleftrightarrow}
+\def\Lra{\Longrightarrow}
+\def\Lla{\Longleftarrow}
+\def\mat#1#2{\mbox{$\left(\begin{array}{#1}#2\end{array}\right)$}}
+\def\det#1#2{\mbox{$\left|\begin{array}{#1}#2\end{array}\right|$}}
+\def\eset{\emptyset}
+\parindent=5ex
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{1ex plus 0.5ex minus 0.2ex}
+\newtheorem{Example}{\text{例}}
+\begin{CJK*}{UTF8}{gbsn}
+
+\date{}
+\title{Homework3}
+\author{Qinglin Li, 5110309074}
+\begin{document}
+\maketitle
+\section*{Q1. Cache}
+	\subsection*{i}
+	The query sequence:
+
+	1,2,3,4,5,6,7,8,9,1,2,3,10,11,1,2,3,12,13,14,15,16,17,10,11\\
+
+	8 frames:\\
+	\begin{tabular}{|c|c|c|}
+	\hline
+	query & cache & miss/hit \\
+	\hline
+
+	1..8 & 1,2,3,4,5,6,7,8 & miss \\ \hline
+
+	9 & 2,3,4,5,6,7,8,9 & miss \\ \hline
+
+	1 & 3,4,5,6,7,8,9,1 & miss \\ \hline
+
+	2 & 4,5,6,7,8,9,1,2 & miss \\ \hline
+
+	3 & 5,6,7,8,9,1,2,3 & miss \\ \hline
+
+	10 & 6,7,8,9,1,2,3,10 & miss \\ \hline
+
+	11 & 7,8,9,1,2,3,10,11 & miss \\ \hline
+
+	1 & 7,8,9,1,2,3,10,11 & hit \\ \hline
+
+	2 & 7,8,9,1,2,3,10,11 & hit \\ \hline
+
+	3 & 7,8,9,1,2,3,10,11 & hit \\ \hline
+
+	12..17 & 10,11,12,13,14,15,16,17 & miss \\ \hline
+
+	10 & 10,11,12,13,14,15,16,17 & hit \\ \hline
+
+	11 & 10,11,12,13,14,15,16,17 & hit \\ \hline
+
+	\end{tabular}
+
+	20 misses, 5 hits\\
+	\newpage
+	9 frames:\\
+	\begin{tabular}{|c|c|c|}
+	\hline
+	query & cache & miss/hit \\
+	\hline
+
+	1..9 & 1,2,3,4,5,6,7,8,9 & miss \\ \hline
+
+	1 & 1,2,3,4,5,6,7,8,9 & hit \\ \hline
+
+	2 & 1,2,3,4,5,6,7,8,9 & hit \\ \hline
+
+	3 & 1,2,3,4,5,6,7,8,9 & hit \\ \hline
+
+	10 & 2,3,4,5,6,7,8,9,10 & miss \\ \hline
+
+	11 & 3,4,5,6,7,8,9,10,11 & miss \\ \hline
+
+	1 & 4,5,6,7,8,9,10,11,1 & miss \\ \hline
+
+	2 & 5,6,7,8,9,10,11,1,2 & miss \\ \hline
+
+	3 & 6,7,8,9,10,11,1,2,3 & miss \\ \hline
+
+	12..17 & 1,2,3,12,13,14,15,16,17 & miss \\ \hline
+
+	10 & 2,3,12,13,14,15,16,17,10 & miss \\ \hline
+
+	11 & 3,12,13,14,15,16,17,10,11 & miss \\ \hline
+
+	\end{tabular}
+
+	22 misses, 3 hits
+	\subsection*{ii}
+	No.\\
+	With LRU, 9 frames cache would contain whatever contained in 8 frames cache
+
+
+\section*{Q2.Memory}
+	\subsection*{i}
+	$$(M+2D+1)\times d\%\times(1-H3)\times H2\times w\%$$
+	
+	\subsection*{ii}
+	zoom in please	
+	
+	\includegraphics[scale=0.37]{tree}
+
+\section*{Q3.Hard Disk}
+	\subsection*{i}
+	$$20000\times5000\times512~\text{bytes}=333.8\text{GB}$$
+	
+	\subsection*{ii}
+	All the other disks need to be read and no other disks need to be written.
+	
+	\subsection*{iii}
+	The write request of block 12, 23 and 66 can be paralleled.\\
+	Write request of block 6 would write P0 on disk 7.\\
+	Write request of block 27 would write disk 7.\\
+	Write request of block 28 would write disk 0.\\
+	Write request of block 50 would write P0 on disk 0.\\
+	
+\section*{Q4.}
+	A=17bits\\
+	B=8bits\\
+	C=7bits\\
+	D=1024bits\\
+	E=17bits\\
+	G=13bits\\
+	H=7bits\\
+	I=12bits\\
+	J=17bits\\
+\end{CJK*}
+\end{document}
